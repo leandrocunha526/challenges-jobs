@@ -2,14 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 import requests
 import plotly.express as px
-
+import pandas as pd
 
 class CryptoAnalyzer:
+
     def __init__(self, root):
         # Configuração da janela principal
         self.root = root
         self.root.title("Análise de Criptomoedas")
-        self.root.geometry("300x200")
+        self.root.geometry("500x300")
 
         # Criação do frame principal
         self.mainframe = ttk.Frame(root, padding="10 10 10 10")
@@ -23,7 +24,12 @@ class CryptoAnalyzer:
     def create_widgets(self):
         """Cria os widgets da interface gráfica."""
         # Botão para mostrar o Tree Map
-        ttk.Button(self.mainframe, text="Mostrar Tree Map", command=self.on_show_treemap).grid(column=1, row=1, sticky=tk.W)
+        ttk.Button(
+            self.mainframe,
+            text="Mostrar TreeMap",
+            command=self.on_show_treemap
+        ).grid(column=1, row=1, sticky=tk.W)
+
     def fetch_crypto_data(self):
         """Busca os dados das criptomoedas da API CoinGecko.
 
@@ -32,9 +38,9 @@ class CryptoAnalyzer:
         """
         url = "https://api.coingecko.com/api/v3/coins/markets"
         parameters = {
-            "vs_currency": "usd",
+            "vs_currency": "brl",
             "order": "market_cap_desc",
-            "per_page": 10,
+            "per_page": 15,
             "page": 1,
             "sparkline": False
         }
@@ -49,18 +55,15 @@ class CryptoAnalyzer:
             data (list): Dados das criptomoedas.
         """
         # Extraindo os dados necessários para o gráfico
-        names = [coin['name'] for coin in data]
-        market_caps = [coin['market_cap'] for coin in data]
-        changes = [coin['price_change_percentage_24h'] for coin in data]
+        df = pd.DataFrame(data)
+        df = df[['name', 'market_cap', 'price_change_percentage_24h']]
+        df.rename(columns={'price_change_percentage_24h': 'change'}, inplace=True)
 
-        # Criando dicionário de dados para o Plotly
-        treemap_data = {
-            'name': names,
-            'market_cap': market_caps,
-            'change': changes
-        }
+        # Formatação dos valores para o gráfico (não na DataFrame)
+        df['market_cap'] = df['market_cap'] / 1e9  # Convertendo para bilhões de BRL
+        df['market_cap'] = df['market_cap'].round(2)
 
-        fig = px.treemap(treemap_data, path=['name'], values='market_cap',
+        fig = px.treemap(df, path=['name'], values='market_cap',
                          color='change',
                          color_continuous_scale='RdYlGn',
                          title='Market Cap and 24h Change of Cryptocurrencies')
