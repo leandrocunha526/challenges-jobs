@@ -4,6 +4,7 @@ import requests
 import plotly.express as px
 import pandas as pd
 
+
 class CryptoAnalyzer:
 
     def __init__(self, root):
@@ -29,6 +30,13 @@ class CryptoAnalyzer:
             text="Mostrar TreeMap",
             command=self.on_show_treemap
         ).grid(column=1, row=1, sticky=tk.W)
+
+        # Descrição do botão
+        ttk.Label(
+            self.mainframe,
+            text="Clique no botão para exibir um TreeMap com a capitalização de mercado e a variação percentual das criptomoedas.",
+            wraplength=400
+        ).grid(column=1, row=2, pady=10, sticky=tk.W)
 
     def fetch_crypto_data(self):
         """Busca os dados das criptomoedas da API CoinGecko.
