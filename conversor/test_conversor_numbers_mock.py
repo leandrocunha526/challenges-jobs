@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 import tkinter as tk
 from conversor_numbers import ConversorNumeros
 from conversor import Conversor
