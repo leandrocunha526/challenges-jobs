@@ -3,10 +3,10 @@
 ## Sobre
 
 - Um conversor de algarismos romanos, de **inteiro para romano** e de **romano para inteiro**.
-- O Tree Map para análise de variação de criptomoeda.
-No Tree Map é possível converter o gráfico para PDF.
+- O TreeMap para análise de variação de criptomoeda.
+No TreeMap é possível converter o gráfico para PDF.
 
-Para executar o Tree Map, use o Virtualenv e o Python PIP para instalar as dependências.
+Para executar o TreeMap, use o Virtualenv e o Python PIP para instalar as dependências.
 
 O uso do Plotly é um pacote de visualização de dados que oferece uma variedade de ferramentas para criar gráficos e painéis interativos, dentro de um ambiente baseado em navegador. O seu uso é aberto e está disponível para diversas linguagens de programação, como Javascript, Julia, R, e, claro, o Python.
 
@@ -25,3 +25,9 @@ A ideia seria criar algo de execução rápida no computador, bastando ter o Pyt
 `pip install -r requirements`  
 `venv\Scripts\activate` ou `. venv/bin/activate`  
 `python treemap.py`  
+
+### A execução do conversor
+
+Para executar rode o comando `python conversor_numbers.py`.
+
+WARN: No Windows, se caso ocorrer o erro `não pode ser carregado porque a execução de scripts foi desabilitada neste sistema`, execute o comando `Set-ExecutionPolicy RemoteSigned` para mudar a política no PowerShell e depois execute `venv\Scripts\activate` novamente.
